@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int opcion = 0;
+    int limite;
+
+    // Ciclo principal para repetir el programa
+    while (opcion != 2) {
+        cout << "\n--- FIBONACCI SIMPLE ---" << endl;
+        cout << "1. Crear serie" << endl;
+        cout << "2. Salir" << endl;
+        cout << "Elige una opcion: ";
+        cin >> opcion;
+
+        if (opcion == 1) {
+            cout << "Ingresa el valor maximo: ";
+            cin >> limite;
+
+            int a = 0;
+            int b = 1;
+            int siguiente = 0;
+
+            cout << "Resultado: ";
+            // Ciclo unico para la serie
+            while (a <= limite) {
+                cout << a << " ";
+                siguiente = a + b;
+                a = b;
+                b = siguiente;
+            }
+            cout << endl;
+        }
+    }
+
+    cout << "Adios!" << endl;
+    return 0;
+}
