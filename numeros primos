@@ -1,0 +1,44 @@
+#include <iostream>
+//Angel Uriel Perez Velazquez 
+using namespace std;
+
+// Esta función devuelve 1 si el número es primo, y 0 si no lo es
+int verificarSiEsPrimo(int n) {
+    int d;
+    int contadorDivisores = 0;
+
+    // Buscar cuántos divisores tiene el número n
+    for (d = 1; d <= n; d++) {
+        if (n % d == 0) {
+            contadorDivisores++;
+        }
+    }
+
+    // Si tiene exactamente 2 divisores (1 y sí mismo)
+    if (contadorDivisores == 2) {
+        return 1; // "Sí es primo"
+    } else {
+        return 0; // "No es primo"
+    }
+}
+
+int main() {
+    int limite, i, suma = 0;
+
+    cout << "Ingrese el numero limite para sumar sus numeros primos  ";
+    cin >> limite;
+
+    cout << "Los numeros primos son: ";
+
+    for (i = 2; i <= limite; i++) {
+        // Llamamos a la función. Si nos devuelve 1, entramos al if
+        if (verificarSiEsPrimo(i) == 1) {
+            cout << i << " ";
+            suma += i;
+        }//fin if
+    }//finfor
+
+    cout << endl << "La suma total es: " << suma << endl;
+
+    return 0;
+}
