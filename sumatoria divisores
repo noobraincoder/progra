@@ -1,0 +1,91 @@
+#include <iostream>
+#include <limits>
+using namespace std;
+/*angel uriel perez*/
+
+
+//declaracion de variables 
+int numero,m3=0,m5=0;
+int opcion;
+int sumatoria;
+//declaracion de funciones
+void calcularMultiplos(int limite, int &count3, int &count5, int &suma);
+int leerValidarNumero();
+//main principal
+int main(){
+int m3 = 0, m5 = 0, sumatoria = 0;
+
+
+cout<<"este programa tiene un rango entre  0 - 1000 y encuntra sus multipos"<<endl;
+
+do{
+
+
+    numero = leerValidarNumero();
+
+	//para excluir numeros fuera de rango
+	if(numero>1000||numero<0 )
+	{
+	cout<<"fuera de rango"<<endl;
+	return 0;	
+	}//fin if 
+	
+	//llamada de la funcion
+    calcularMultiplos(numero, m3, m5, sumatoria);
+
+
+
+
+
+
+	//salida de informacion resultante
+	cout<<"suma de valores "<<sumatoria<<endl;
+	cout<<"multiplos de 5 son "<<m5<<endl;
+	cout<<"multiplos de 3 son "<<m3<<endl;
+	
+	
+	cout<<"quieres reintentar 1/si  2/no ?"<<endl;
+	cin>>opcion;
+}while(opcion!=2);//fin while para opcion 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+//funcion para el calculo de los multiplos 
+void calcularMultiplos(int limite, int &count3, int &count5, int &suma) {
+    for (int i = 1; i <= limite; i++) {
+        if (i % 3 == 0) {
+            count3++;
+            suma += i;
+        }
+        if (i % 5 == 0) {
+            count5++;
+            suma += i;
+        }
+    }
+}
+//funcion para no aceptar letras 
+int leerValidarNumero() {
+    int n;
+    while (true) {
+        cout << "Dame el numero: ";
+        cin >> n;
+
+        if (cin.fail()) { 
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cout << "Error: Por favor, ingresa solo numeros." << endl;
+        } else {
+            return n; // Si el número es válido, lo devuelve y sale del ciclo
+        }
+    }
+}
