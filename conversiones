@@ -1,0 +1,100 @@
+#include <iostream>
+//Angel Uriel Perez Velazquez   
+using namespace std;
+
+// --- declaramos las funciones  ---
+// Traduce letras y números (como 'A' o '5') a un número real que la computadora entienda.
+int charAEntero(char c);
+
+//  convierte un número en una letra o símbolo (ejemplo: 10 lo vuelve 'A').
+char enteroAChar(int n);
+
+// Revisa que no hayas valores no deseados
+bool esValido(char num[], int base);
+
+// Toma el número que escribiste y lo convierte a base 10 (decimal) 
+long long aDecimal(char num[], int base);
+
+// transforma a la base que elegiste para mostrar el resultado.
+void desdeDecimal(long long decimal, int baseDestino);
+
+// --- FUNCIÓN PRINCIPAL ---
+int main() {
+    int continuar;
+    char valor[64];
+    int baseOrigen, baseDestino;
+
+    do {
+        cout << "\n--- CONVERSOR UNIVERSAL " << endl;
+        cout << "Bases: 2, 8, 10, 16" << endl;
+
+        cout << "Base de origen: "; cin >> baseOrigen;
+        cout << "Valor a convertir: "; cin >> valor;
+
+        if (!esValido(valor, baseOrigen)) {
+            cout << "Error: El numero no es valido para la base " << baseOrigen << endl;
+        } else {
+            cout << "Base de destino: "; cin >> baseDestino;
+            
+            long long decimal = aDecimal(valor, baseOrigen);
+            desdeDecimal(decimal, baseDestino);
+        }
+
+        cout << "\nPresione 1 para otra conversion o 0 para salir: ";
+        cin >> continuar;
+
+    } while (continuar != 0);
+
+    return 0;
+}
+
+// --- DESARROLLO DE FUNCIONES (Definición) ---
+
+int charAEntero(char c) {
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+    return -1;
+}
+
+char enteroAChar(int n) {
+    if (n >= 0 && n <= 9) return n + '0';
+    return (n - 10) + 'A';
+}
+
+bool esValido(char num[], int base) {
+    for (int i = 0; num[i] != '\0'; i++) {
+        int valor = charAEntero(num[i]);
+        if (valor == -1 || valor >= base) return false;
+    }
+    return true;
+}
+
+long long aDecimal(char num[], int base) {
+    long long decimal = 0;
+    for (int i = 0; num[i] != '\0'; i++) {
+        decimal = decimal * base + charAEntero(num[i]);
+    }
+    return decimal;
+}
+
+void desdeDecimal(long long decimal, int baseDestino) {
+    if (decimal == 0) {
+        cout << "Resultado: 0" << endl;
+        return;
+    }
+
+    char resultado[64];
+    int indice = 0;
+
+    while (decimal > 0) {
+        resultado[indice++] = enteroAChar(decimal % baseDestino);
+        decimal /= baseDestino;
+    }
+
+    cout << "Resultado: ";
+    for (int i = indice - 1; i >= 0; i--) {
+        cout << resultado[i];
+    }
+    cout << endl;
+}
