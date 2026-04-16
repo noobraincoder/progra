@@ -1,0 +1,77 @@
+#include <iostream>
+#include <cmath> // Para calcular el total de movimientos
+
+using namespace std;
+
+// --- DECLARACIÓN DE FUNCIONES (Prototipos) ---
+void resolverHanoi(int n, int origen, int auxiliar, int destino, int &contador);
+void mostrarMenu();
+
+int main() {
+    int numDiscos;
+    char opcion;
+
+    do {
+        int contadorMovimientos = 0; // Reiniciamos el contador cada vez
+
+        cout << "--- EL ACERTIJO DE LAS TORRES DE HANOI ---" << endl;
+        cout << "Ingresa el numero de discos (3 - 7): ";
+        cin >> numDiscos;
+
+        // Validación básica
+        if (numDiscos < 3 || numDiscos > 7) {
+            cout << "Por favor, elige un numero entre 3 y 7." << endl;
+        } else {
+            cout << "\nPasos a seguir:" << endl;
+            
+            // Llamada a la función recursiva
+            // 1: Torre Origen, 2: Torre Auxiliar, 3: Torre Destino
+            resolverHanoi(numDiscos, 1, 2, 3, contadorMovimientos);
+
+            cout << "\n¡Juego completado!" << endl;
+            cout << "Movimientos totales realizados: " << contadorMovimientos << endl;
+            
+            // Cálculo matemático de movimientos mínimos: (2^n) - 1
+            int minimos = pow(2, numDiscos) - 1;
+            cout << "Movimientos minimos esperados: " << minimos << endl;
+        }
+
+        cout << "\n¿Deseas intentar con otro numero de discos? (s/n): ";
+        cin >> opcion;
+        cout << endl;
+
+    } while (opcion == 's' || opcion == 'S');
+
+    cout << "Gracias por jugar" << endl;
+
+    return 0;
+}
+
+// --- DESARROLLO DE LAS FUNCIONES ---
+
+/**
+ * Función recursiva para mover los discos
+ * n: número de discos
+ * origen: torre de donde sale el disco
+ * auxiliar: torre que ayuda al movimiento
+ * destino: torre a donde llega el disco
+ * &contador: referencia para ir sumand
+ * */ 
+void resolverHanoi(int n, int origen, int auxiliar, int destino, int &contador) {
+    // Caso base: Si solo hay un disco, se mueve directamente
+    if (n == 1) {
+        contador++;
+        cout << "Movimiento " << contador << ": Mover disco de Torre " << origen << " a Torre " << destino << endl;
+    } 
+    else {
+        // 1. Mover n-1 discos del origen al auxiliar usando el destino como apoyo
+        resolverHanoi(n - 1, origen, destino, auxiliar, contador);
+
+        // 2. Mover el disco grande que quedó
+        contador++;
+        cout << "Movimiento " << contador << ": Mover disco de Torre " << origen << " a Torre " << destino << endl;
+
+        // 3. Mover los discos que estaban en el auxiliar hacia el destino
+        resolverHanoi(n - 1, auxiliar, origen, destino, contador);
+    }
+}
